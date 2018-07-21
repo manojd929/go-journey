@@ -8,7 +8,8 @@ func main() {
 	cards.print()
 }
 
-/* func newCard() string {
+/*
+func newCard() string {
 	return "Five of Diamonds"
 }
 */
