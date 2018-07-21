@@ -1,16 +1,11 @@
 package main
 
-// import "fmt"
-
 func main() {
 	// cards := deck{"Ace of Diamonds", newCard()}
-	cards := newDeckFromFile("my_cards")
-	hand, remainingCards := deal(cards, 5)
-
-	hand.print()
-	remainingCards.print()
-
-	cards.saveToFile("my_cards")
+	cards := newDeck()
+	cards.print()
+	cards.shuffle()
+	cards.print()
 }
 
 /* func newCard() string {

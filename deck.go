@@ -1,10 +1,12 @@
 package main
 
 import (
-	"fmt"
-	"strings"
-	"io/ioutil"
-	"os"
+	"fmt"       // print function
+	"io/ioutil" // ReadFromFile function
+	"math/rand" // shuffle function
+	"os"        // WriteToFle function
+	"strings"   // ReadFromFile function
+	"time"      // shuffle function
 )
 
 // Create a new type called 'deck' which is a slice of strings
@@ -25,10 +27,6 @@ func newDeck() deck {
 	return cards
 }
 
-func deal(d deck, handSize int) (deck, deck) {
-	return d[:handSize], d[handSize:]
-}
-
 // here word 'deck' is a reference to the type that we want to attach this function to
 // d is the actual copy of the deck we're working with and it is available in function
 // one or two letter abbreviation. ( by convention ) 'd'
@@ -36,6 +34,10 @@ func (d deck) print() {
 	for i, card := range d {
 		fmt.Println(i, card)
 	}
+}
+
+func deal(d deck, handSize int) (deck, deck) {
+	return d[:handSize], d[handSize:]
 }
 
 func (d deck) toString() string {
@@ -61,6 +63,22 @@ func newDeckFromFile(filename string) deck {
 		os.Exit(1)
 	}
 
-	ss := strings.Split(string(bs), ",")
-	return []string(ss) // return deck(ss)
+	s := strings.Split(string(bs), ",")
+	return []string(s) // return deck(s)
+}
+
+/*
+	for each index, card in cards
+		generate a random number between 0 and len(cards)-1
+		swap the current card and card at cards[randomNumber]
+*/
+func (d deck) shuffle() {
+	// To generate new random number, generating a new seed every time
+	source := rand.NewSource(time.Now().UnixNano()) // time.Now().UnixNano() generates new int64 every time
+	r := rand.New(source)
+
+	for i := range d {
+		newPosition := r.Intn(len(d) - 1)
+		d[i], d[newPosition] = d[newPosition], d[i]
+	}
 }
